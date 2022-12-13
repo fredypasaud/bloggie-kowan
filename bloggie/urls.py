@@ -19,6 +19,6 @@ from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', include('core_blog.urls')),
-    path('', include('myauth.urls'))
+    path('', include('coreblog.urls')),
+    path('account/', include('myauth.urls'))
 ]

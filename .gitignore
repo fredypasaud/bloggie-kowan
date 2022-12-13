@@ -172,3 +172,15 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/django
+
+db.sqlite3
+
+media/
+
+.DS_Store
+
+#ignore staticfiles
+staticfiles
+
+#ignore pylint
+pylint/

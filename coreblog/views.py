@@ -28,33 +28,18 @@ def delete_blog(request, id):
         blog_post.delete
     return redirect("/")
 
-def see_all_post_non_specific_user(request):
+def see_all_post(request):
     blog_post = BlogPost.objects.all()
-    for blog in blog_post:
-        context = {
-            'blog_author' : blog.author.get_username,
-            'blog_post': blog.blog_text,
-            'post_title': blog.judul_blog,
-            'post_time': blog.post_time
-        }
-    return render(request, 'blog_post.html', context)
-
-def see_all_post_specific_user(request, username):
-    blog_post = BlogPost.objects.filter(author = username)
-    for blog in blog_post:
-        context = {
-            'blog_author' : blog.author.get_username,
-            'blog_post': blog.blog_text,
-            'post_title': blog.judul_blog,
-            'post_time': blog.post_time
-        }
-    return render(request, 'blog_post.html', context)
-
-def see_detailed_post(request, id):
-    blog_post = BlogPost.objects.filter(pk = id)
     context = {
-    'blog_author' : blog_post.author.get_username,
+        'list_blog': blog_post
+    }
+    return render(request, 'index.html', context)
+
+def see_detailed_post(request, id_blog):
+    blog_post = BlogPost.objects.get(pk = id_blog)
+    context = {
+    'blog_author' : blog_post.author.username,
     'blog_post': blog_post.blog_text,
     'post_title': blog_post.judul_blog,
     'post_time': blog_post.post_time}
-    return render(request, 'blog_detailed.html', context)
+    return render(request, 'post.html', context)
