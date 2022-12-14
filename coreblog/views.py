@@ -15,17 +15,18 @@ def create_blog(request):
             blog_post = BlogPost.objects.create(
                 author = user,
                 judul_blog = form.cleaned_data.get('judul_blog'),
-                blog_post = form.cleaned_data.get('blog_text'),
+                blog_text = form.cleaned_data.get('blog_text'),
                 post_time = datetime.now()
             )
             blog_post.save()
-    return redirect("/")
+            return redirect("/")
+    context = {'form': BlogPostForm()}
+    return render(request, 'create_post.html', context) 
 
 @login_required
-def delete_blog(request, id):
-    if request.method == 'POST':
-        blog_post = BlogPost.objects.filter(pk = id)
-        blog_post.delete
+def delete_blog(request, id_blog):
+    blog_post = BlogPost.objects.filter(pk = id_blog)
+    blog_post.delete()
     return redirect("/")
 
 def see_all_post(request):
@@ -43,3 +44,11 @@ def see_detailed_post(request, id_blog):
     'post_title': blog_post.judul_blog,
     'post_time': blog_post.post_time}
     return render(request, 'post.html', context)
+
+def account_page(request):
+    user = request.user
+    blog_post = BlogPost.objects.filter(author = user)
+    context = {
+        'list_blog': blog_post
+    }
+    return render(request, 'profile_view.html', context)
