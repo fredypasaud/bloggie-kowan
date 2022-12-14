@@ -6,7 +6,7 @@ from .forms import BlogPostForm
 
 # Create your views here.
 
-@login_required
+@login_required(login_url="/account/login/")
 def create_blog(request):
     user = request.user
     if request.method == 'POST':
@@ -23,7 +23,7 @@ def create_blog(request):
     context = {'form': BlogPostForm()}
     return render(request, 'create_post.html', context) 
 
-@login_required
+@login_required(login_url="/account/login/")
 def delete_blog(request, id_blog):
     blog_post = BlogPost.objects.filter(pk = id_blog)
     blog_post.delete()
